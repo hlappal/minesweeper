@@ -1,4 +1,4 @@
 # minesweeper
 ## A minesweeper game project.
 
-Just-for-fun project for recreating the classic Minesweeper game in Python.
+Just-for-fun project for recreating the classic Minesweeper game in Python 3.10.
