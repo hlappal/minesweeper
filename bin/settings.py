@@ -1,9 +1,13 @@
 import utils
 
 
-BOARD_WIDTH = 980
-BOARD_HEIGHT = 640
-FRAME_WIDTH = utils.height_prct(10)
+MINE_SIZE = 10
+N_MINES = 50
 
-BOARD_BG = "#afafaf"
-FRAME_BG = "#a0a0a0"
+BOARD_WIDTH = MINE_SIZE * 80
+BOARD_HEIGHT = MINE_SIZE * 50
+FRAME_WIDTH = utils.height_prct(5)
+
+BOARD_BG = "#000000"
+FRAME_BG = "#aaaaaa"
+MINE_BG = "#666666"
