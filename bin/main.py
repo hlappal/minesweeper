@@ -1,51 +1,47 @@
 import settings
 import utils
 import random
-from tkinter import Tk, Frame
-from mine import Mine
+from tkinter import Tk, Frame, Button
+from cell import Cell
 
 
 def main():
     # Configure the window settings
     root = Tk()
-    root.configure(bg=settings.BOARD_BG)
-    root.geometry(f'{settings.BOARD_WIDTH}x{settings.BOARD_HEIGHT}')
+    root.configure(bg=settings.FIELD_BG)
+    root.geometry(f'{settings.FIELD_WIDTH}x{settings.FIELD_HEIGHT + settings.PANEL_WIDTH}')
     root.resizable(False, False)
     root.title('Minesweeper')
 
     top_frame = Frame(
         root,
-        bg=settings.FRAME_BG,
-        width=settings.BOARD_WIDTH,
-        height=settings.FRAME_WIDTH
+        bg=settings.PANEL_BG,
+        width=settings.FIELD_WIDTH,
+        height=settings.PANEL_WIDTH
     )
     top_frame.place(x=0, y=0)
 
-    left_frame = Frame(
-        root,
-        bg=settings.FRAME_BG,
-        width=settings.FRAME_WIDTH,
-        height=(settings.BOARD_HEIGHT - settings.FRAME_WIDTH)
-    )
-    left_frame.place(x=0, y=settings.FRAME_WIDTH)
+    # left_frame = Frame(
+    #     root,
+    #     bg=settings.PANEL_BG,
+    #     width=settings.PANEL_WIDTH,
+    #     height=(settings.FIELD_HEIGHT - settings.PANEL_WIDTH)
+    # )
+    # left_frame.place(x=0, y=settings.PANEL_WIDTH)
 
     center_frame = Frame(
         root,
-        bg=settings.BOARD_BG,
-        width=(settings.BOARD_WIDTH - settings.FRAME_WIDTH),
-        height=(settings.BOARD_HEIGHT - settings.FRAME_WIDTH)
+        bg=settings.FIELD_BG,
+        width=settings.FIELD_WIDTH,
+        height=settings.FIELD_HEIGHT
     )
-    center_frame.place(x=settings.FRAME_WIDTH, y=settings.FRAME_WIDTH)
+    center_frame.place(x=0, y=settings.PANEL_WIDTH)
 
-    mines = utils.init_mines()
-    for mine in mines:
-        mine.frame = Frame(
-            root,
-            bg=settings.MINE_BG,
-            width=(settings.MINE_SIZE - 2),
-            height=(settings.MINE_SIZE - 2)
-        )
-        mine.frame.place(x=mine.x, y=mine.y)
+    for i in range(settings.GRID_HEIGHT):
+        for j in range(settings.GRID_WIDTH):
+            cell = Cell()
+            cell.create_btn_obj(center_frame)
+            cell.cell_btn_obj.grid(row=i, column=j)
 
     # Run the window
     root.mainloop()
