@@ -39,9 +39,11 @@ def main():
 
     for i in range(settings.GRID_HEIGHT):
         for j in range(settings.GRID_WIDTH):
-            cell = Cell()
+            cell = Cell(i, j)
             cell.create_btn_obj(center_frame)
             cell.cell_btn_obj.grid(row=i, column=j)
+
+    Cell.randomize_mines()
 
     # Run the window
     root.mainloop()
