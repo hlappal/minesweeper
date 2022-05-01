@@ -19,7 +19,7 @@ class Cell:
         btn = Button(
             location,
             width=3,
-            height=3,
+            height=2,
             #text=f"{self.x}, {self.y}"
         )
         btn.bind('<Button-1>', self.left_click_action)
@@ -27,10 +27,46 @@ class Cell:
         self.cell_btn_obj = btn
 
     def left_click_action(self, event):
-        print(self.is_mine)
+        if self.is_mine:
+            self.show_mine()
+        else:
+            self.show_cell()
+
+    def get_cell_by_axis(self, x: int, y: int) -> object:
+        for cell in Cell.all:
+            if cell.x == x and cell.y == y:
+                return cell
+
+    @property
+    def neighboring_cells(self) -> list:
+        cells = [
+            self.get_cell_by_axis(self.x - 1, self.y - 1),
+            self.get_cell_by_axis(self.x, self.y - 1),
+            self.get_cell_by_axis(self.x + 1, self.y - 1),
+            self.get_cell_by_axis(self.x - 1, self.y),
+            self.get_cell_by_axis(self.x + 1, self.y),
+            self.get_cell_by_axis(self.x - 1, self.y + 1),
+            self.get_cell_by_axis(self.x, self.y + 1),
+            self.get_cell_by_axis(self.x + 1, self.y + 1),
+        ]
+        return [cell for cell in cells if cell]
+
+    @property
+    def neighboring_mines(self) -> int:
+        count = 0
+        for cell in self.neighboring_cells:
+            if cell.is_mine:
+                count += 1
+        return count
+
+    def show_cell(self):
+        print(self.neighboring_mines)
+
+    def show_mine(self):
+        self.cell_btn_obj.configure(bg='red')
 
     def right_click_action(self, event):
-        print(self.is_mine)
+        pass
 
     @staticmethod
     def randomize_mines():
