@@ -1,11 +1,11 @@
-from tkinter import Button
+from tkinter import Button, Label
 import settings
 import random
 
 
 class Cell:
     all = []
-
+    cell_count_label_obj = None
     def __init__(self, x: int, y: int, is_mine=False):
         self.x = x
         self.y = y
@@ -25,6 +25,16 @@ class Cell:
         btn.bind('<Button-1>', self.left_click_action)
         btn.bind('<Button-3>', self.right_click_action)
         self.cell_btn_obj = btn
+
+    @staticmethod
+    def create_cell_count_label(location):
+        lbl = Label(
+            location,
+            text=f"Cells left: {settings.CELL_COUNT}",
+            width=12,
+            height=2
+        )
+        Cell.cell_count_label_obj = lbl
 
     def left_click_action(self, event):
         if self.is_mine:
