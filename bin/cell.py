@@ -30,6 +30,9 @@ class Cell:
         if self.is_mine:
             self.show_mine()
         else:
+            if self.neighboring_mines == 0:
+                for cell in self.neighboring_cells:
+                    cell.show_cell()
             self.show_cell()
 
     def get_cell_by_axis(self, x: int, y: int) -> object:
@@ -60,7 +63,7 @@ class Cell:
         return count
 
     def show_cell(self):
-        print(self.neighboring_mines)
+        self.cell_btn_obj.configure(text=self.neighboring_mines)
 
     def show_mine(self):
         self.cell_btn_obj.configure(bg='red')
