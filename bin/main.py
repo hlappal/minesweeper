@@ -9,14 +9,16 @@ def main():
     # Configure the window settings
     root = Tk()
     root.configure(bg=settings.FIELD_BG)
-    root.geometry(f"{settings.FIELD_WIDTH}x{settings.FIELD_HEIGHT+settings.PANEL_WIDTH}")
+    root.geometry('500x300')
+    root.grid_columnconfigure(0, weight=1)
+    root.grid_rowconfigure(0, weight=1)
     root.resizable(False, False)
     root.title('Minesweeper')
 
     top_frame = Frame(
         root,
         bg=settings.PANEL_BG,
-        width=settings.FIELD_WIDTH,
+        width=500,
         height=settings.PANEL_WIDTH
     )
     top_frame.place(x=0, y=0)
@@ -32,16 +34,19 @@ def main():
     center_frame = Frame(
         root,
         bg=settings.FIELD_BG,
-        width=settings.FIELD_WIDTH,
-        height=(settings.FIELD_HEIGHT + settings.PANEL_WIDTH)
+        width=500,
+        height=(300-settings.PANEL_WIDTH)
     )
+    center_frame.grid(row=0, column=0, sticky='nesw')
     center_frame.place(x=0, y=settings.PANEL_WIDTH)
 
-    for i in range(settings.GRID_HEIGHT):
-        for j in range(settings.GRID_WIDTH):
-            cell = Cell(i, j)
+    for row in range(settings.GRID_HEIGHT):
+        center_frame.grid_rowconfigure(row, weight=1)
+        for col in range(settings.GRID_WIDTH):
+            center_frame.grid_columnconfigure(col, weight=1)
+            cell = Cell(row, col)
             cell.create_btn_obj(center_frame)
-            cell.cell_btn_obj.grid(row=i, column=j)
+            cell.cell_btn_obj.grid(row=row, column=col, sticky='nesw')
 
     # Call the labels from the Cell class
     Cell.create_cell_count_label(top_frame)

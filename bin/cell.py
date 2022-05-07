@@ -18,11 +18,11 @@ class Cell:
         # Append the object to the Cell.all list
         Cell.all.append(self)
 
-    def create_btn_obj(self, location: object):
+    def create_btn_obj(self, location):
         btn = Button(
             location,
-            width=3,
-            height=2,
+            #width=settings.CELL_SIZE,
+            #height=settings.CELL_SIZE,
             #text=f"{self.x}, {self.y}"
         )
         btn.bind('<Button-1>', self.left_click_action)
