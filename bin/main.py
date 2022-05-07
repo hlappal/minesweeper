@@ -43,9 +43,11 @@ def main():
             cell.create_btn_obj(center_frame)
             cell.cell_btn_obj.grid(row=i, column=j)
 
-    # Call the label from the Cell class
+    # Call the labels from the Cell class
     Cell.create_cell_count_label(top_frame)
     Cell.cell_count_label_obj.place(x=0, y=0)
+    Cell.create_mine_count_label(top_frame)
+    Cell.mine_count_label_obj.place(x=100, y=0)
 
     Cell.randomize_mines()
 

@@ -5,7 +5,10 @@ import random
 
 class Cell:
     all = []
+    cell_count = settings.CELL_COUNT
     cell_count_label_obj = None
+    mine_count = settings.N_MINES
+    mine_count_label_obj = None
     def __init__(self, x: int, y: int, is_mine=False):
         self.x = x
         self.y = y
@@ -30,11 +33,24 @@ class Cell:
     def create_cell_count_label(location):
         lbl = Label(
             location,
-            text=f"Cells left: {settings.CELL_COUNT}",
+            text=f"Cells left: {Cell.cell_count}",
             width=12,
-            height=2
+            height=2,
+            bg=settings.PANEL_BG,
+            #font=('', 24)
         )
         Cell.cell_count_label_obj = lbl
+
+    @staticmethod
+    def create_mine_count_label(location):
+        lbl = Label(
+            location,
+            text=f"Mines left: {Cell.mine_count}",
+            width=12,
+            height=2,
+            bg=settings.PANEL_BG,
+        )
+        Cell.mine_count_label_obj = lbl
 
     def left_click_action(self, event):
         if self.is_mine:
@@ -73,10 +89,22 @@ class Cell:
         return count
 
     def show_cell(self):
+        Cell.cell_count -= 1
         self.cell_btn_obj.configure(text=self.neighboring_mines)
+        # Update cell count label
+        if Cell.cell_count_label_obj:
+            Cell.cell_count_label_obj.configure(
+                text=f"Cells left: {Cell.cell_count}"
+            )
 
     def show_mine(self):
+        Cell.mine_count -= 1
         self.cell_btn_obj.configure(bg='red')
+        # Update mine count label
+        if Cell.mine_count_label_obj:
+            Cell.mine_count_label_obj.configure(
+                text=f"Mines left: {Cell.mine_count}"
+            )
 
     def right_click_action(self, event):
         pass
